@@ -9,6 +9,11 @@ export interface SOP {
   compliantEvents: number;
   violations: number;
   actualValue?: string; // For SOPs without % - stores the numeric value with unit (e.g., "48", "240 min", "1:4")
+  comingSoon?: boolean;
+  expected?: number;
+  detected?: number;
+  trend?: number[];
+  hourlyData?: { hour: string; compliance: number; expected: number; detected: number }[];
 }
 
 export interface Violation {
@@ -36,7 +41,7 @@ export interface SessionEvent {
   sopId: string;
   sopName: string;
   timestamp: string;
-  status: 'Compliant' | 'Missed' | 'Uncertain';
+  status: 'Compliant' | 'Missed' | 'Uncertain' | 'Violation';
   icon: string;
   aiConfidence?: number;
 }
@@ -76,11 +81,11 @@ export const sops: SOP[] = [
   { id: 'SOP010', name: 'Dialysis Machine Rinsing Compliance %', category: 'Clinical Care Quality Metrics', compliance: 88, totalEvents: 40, compliantEvents: 35, violations: 5 },
   { id: 'SOP011', name: 'Dialysis Machine Hot Disinfection Compliance %', category: 'Clinical Care Quality Metrics', compliance: 92, totalEvents: 40, compliantEvents: 37, violations: 3 },
   { id: 'SOP012', name: 'BP Monitoring Frequency Compliance %', category: 'Clinical Care Quality Metrics', compliance: 91, totalEvents: 160, compliantEvents: 146, violations: 14 },
-  { id: 'SOP013', name: 'Unique Blood Spillages Identified', category: 'Clinical Care Quality Metrics', compliance: 100, totalEvents: 3, compliantEvents: 3, violations: 0, actualValue: '3' },
-  { id: 'SOP014', name: 'Number of Unique Dialysis Machine Alerts', category: 'Clinical Care Quality Metrics', compliance: 100, totalEvents: 12, compliantEvents: 12, violations: 0, actualValue: '12' },
-  { id: 'SOP015', name: 'Average Alert Resolution Time', category: 'Clinical Care Quality Metrics', compliance: 87, totalEvents: 12, compliantEvents: 10, violations: 2, actualValue: '8.5 min' },
-  { id: 'SOP016', name: 'AVF Access – % & Count', category: 'Clinical Care Quality Metrics', compliance: 70, totalEvents: 40, compliantEvents: 28, violations: 12, actualValue: '70% (28)' },
-  { id: 'SOP017', name: 'CVC Access – % & Count', category: 'Clinical Care Quality Metrics', compliance: 30, totalEvents: 40, compliantEvents: 12, violations: 28, actualValue: '30% (12)' },
+  { id: 'SOP013', name: 'Unique Blood Spillages Identified', category: 'Clinical Care Quality Metrics', compliance: 100, totalEvents: 3, compliantEvents: 3, violations: 0, actualValue: '3', comingSoon: true },
+  { id: 'SOP014', name: 'Number of Unique Dialysis Machine Alerts', category: 'Clinical Care Quality Metrics', compliance: 100, totalEvents: 12, compliantEvents: 12, violations: 0, actualValue: '12', comingSoon: true },
+  { id: 'SOP015', name: 'Average Alert Resolution Time', category: 'Clinical Care Quality Metrics', compliance: 87, totalEvents: 12, compliantEvents: 10, violations: 2, actualValue: '8.5 min', comingSoon: true },
+  { id: 'SOP016', name: 'AVF Access – % & Count', category: 'Clinical Care Quality Metrics', compliance: 70, totalEvents: 40, compliantEvents: 28, violations: 12, actualValue: '70% (28)', comingSoon: true },
+  { id: 'SOP017', name: 'CVC Access – % & Count', category: 'Clinical Care Quality Metrics', compliance: 30, totalEvents: 40, compliantEvents: 12, violations: 28, actualValue: '30% (12)', comingSoon: true },
   { id: 'SOP018', name: 'Pre & Post Dialysis Weight Measurement Compliance %', category: 'Clinical Care Quality Metrics', compliance: 87, totalEvents: 80, compliantEvents: 70, violations: 10 },
 
   // Staff Efficiency Metrics (3 SOPs)
@@ -350,12 +355,12 @@ export function getBedSessionsForDate(date: string): BedSession[] {
   // Use the date to create variations in the data
   const dateNum = parseInt(date) || 30;
   const seed = dateNum % 3; // Create 3 different variations
-  
+
   // Base pattern - default is date "30"
   if (seed === 0) {
     return bedSessions; // Use original data for dates 30, 3, 6, etc.
   }
-  
+
   // Variation 1 - for dates 28, 31, 1, 4, etc.
   if (seed === 1) {
     return bedSessions.map((session, index) => ({
@@ -365,7 +370,7 @@ export function getBedSessionsForDate(date: string): BedSession[] {
       endTime: index % 2 === 0 ? session.endTime : addMinutes(session.endTime, 30),
     }));
   }
-  
+
   // Variation 2 - for dates 29, 2, 5, etc.
   return bedSessions.map((session, index) => ({
     ...session,
