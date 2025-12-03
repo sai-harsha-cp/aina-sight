@@ -1,4 +1,4 @@
-// Mock data for NephroPlus Centre Intelligence Console
+// Mock data for Centre Intelligence Console
 
 export interface SOP {
   id: string;

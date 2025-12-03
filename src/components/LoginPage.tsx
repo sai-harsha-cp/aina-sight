@@ -21,9 +21,9 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
   // Mock user database with different roles
   const mockUsers = {
-    "centre@nephroplus.com": { password: "Centre@123", role: "centre" as const, name: "Sanjay Kumar", mfa: "123456" },
-    "cluster@nephroplus.com": { password: "Cluster@123", role: "cluster" as const, name: "Rahul Sharma", mfa: "123456" },
-    "zonal@nephroplus.com": { password: "Zonal@123", role: "zonal" as const, name: "Priya Mehta", mfa: "123456" }
+    "centre@ainasight.com": { password: "Centre@123", role: "centre" as const, name: "Sanjay Kumar", mfa: "123456" },
+    "cluster@ainasight.com": { password: "Cluster@123", role: "cluster" as const, name: "Rahul Sharma", mfa: "123456" },
+    "zonal@ainasight.com": { password: "Zonal@123", role: "zonal" as const, name: "Priya Mehta", mfa: "123456" }
   };
 
   const validatePassword = (pwd: string) => {
@@ -39,7 +39,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (lockoutTime > 0) {
       return;
     }
@@ -52,7 +52,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       // For prototype: just login with a default role based on email pattern or default to centre
       let role: "centre" | "cluster" | "zonal" = "centre";
       let name = "Demo User";
-      
+
       if (email.includes("zonal")) {
         role = "zonal";
         name = "Priya Mehta";
@@ -90,7 +90,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               <Group1 />
             </div>
           </div>
-          <h1 className="text-gray-900 mb-2">NephroPlus Centre Intelligence</h1>
+          <h1 className="text-gray-900 mb-2">Centre Intelligence</h1>
         </div>
 
         {/* Login Card */}
@@ -114,7 +114,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="block w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-all outline-none bg-gray-50 hover:bg-white"
-                        placeholder="you@nephroplus.com"
+                        placeholder="you@ainasight.com"
                         disabled={lockoutTime > 0}
                       />
                     </div>

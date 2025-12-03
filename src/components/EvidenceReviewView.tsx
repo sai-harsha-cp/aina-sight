@@ -37,7 +37,7 @@ export function EvidenceReviewView({ onViewEvidence, initialFilter, onFilterChan
   const [selectedTimeline, setSelectedTimeline] = useState<string>("all");
 
   // Get unique SOP names filtered by selected category
-  const uniqueSOPs = selectedCategory === "all" 
+  const uniqueSOPs = selectedCategory === "all"
     ? Array.from(new Set(sops.map(sop => sop.name))).sort()
     : sops.filter(sop => sop.category === selectedCategory).map(sop => sop.name).sort();
 
@@ -45,18 +45,18 @@ export function EvidenceReviewView({ onViewEvidence, initialFilter, onFilterChan
   const parseTimeToMinutes = (timeStr: string): number => {
     const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
     if (!match) return 0;
-    
+
     let hours = parseInt(match[1]);
     const minutes = parseInt(match[2]);
     const period = match[3].toUpperCase();
-    
+
     // Convert to 24-hour format
     if (period === 'PM' && hours !== 12) {
       hours += 12;
     } else if (period === 'AM' && hours === 12) {
       hours = 0;
     }
-    
+
     return hours * 60 + minutes;
   };
 
@@ -64,7 +64,7 @@ export function EvidenceReviewView({ onViewEvidence, initialFilter, onFilterChan
     const categoryMatch = selectedCategory === "all" || violation.category === selectedCategory;
     const statusMatch = selectedStatus === "all" || violation.status === selectedStatus;
     const sopMatch = selectedSOP === "all" || violation.sop === selectedSOP;
-    
+
     return categoryMatch && statusMatch && sopMatch;
   });
 
@@ -103,7 +103,7 @@ export function EvidenceReviewView({ onViewEvidence, initialFilter, onFilterChan
       <Card className="p-6 bg-white border-gray-200">
         <div className="flex gap-4 items-end flex-wrap">
           <div className="w-64">
-            <label className="text-gray-600 mb-2 block">SOP Category</label>
+            <label className="text-gray-600 mb-2 block">Event Category</label>
             <Select value={selectedCategory} onValueChange={(value) => {
               setSelectedCategory(value);
               // Reset SOP selection when category changes
@@ -130,7 +130,7 @@ export function EvidenceReviewView({ onViewEvidence, initialFilter, onFilterChan
           </div>
 
           <div className="w-64">
-            <label className="text-gray-600 mb-2 block">SOP Name</label>
+            <label className="text-gray-600 mb-2 block">Event Name</label>
             <Select value={selectedSOP} onValueChange={(value) => {
               setSelectedSOP(value);
               onFilterChange?.();
@@ -235,7 +235,7 @@ export function EvidenceReviewView({ onViewEvidence, initialFilter, onFilterChan
             <TableHeader>
               <TableRow>
                 <TableHead>Timestamp</TableHead>
-                <TableHead>SOP</TableHead>
+                <TableHead>Event</TableHead>
                 <TableHead>Bed</TableHead>
                 <TableHead>Patient</TableHead>
                 <TableHead>Category</TableHead>
@@ -260,31 +260,31 @@ export function EvidenceReviewView({ onViewEvidence, initialFilter, onFilterChan
                     return timeB - timeA;
                   })
                   .map((violation) => (
-                  <TableRow key={violation.id}>
-                    <TableCell>{violation.timestamp}</TableCell>
-                    <TableCell>{violation.sop}</TableCell>
-                    <TableCell>{violation.bed}</TableCell>
-                    <TableCell className="text-gray-600">{violation.patientId || '-'}</TableCell>
-                    <TableCell className="text-gray-600">{violation.category}</TableCell>
-                    <TableCell>{getStatusBadge(violation.status)}</TableCell>
-                    <TableCell>
-                      {violation.status === 'Missed' ? (
-                        <span className="text-sm text-gray-500">No Evidence</span>
-                      ) : violation.thumbnail ? (
-                        <img
-                          src={violation.thumbnail}
-                          alt="Evidence thumbnail"
-                          className="w-16 h-12 object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
-                          onClick={() => onViewEvidence(violation)}
-                        />
-                      ) : (
-                        <div className="w-16 h-12 bg-gray-100 rounded flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors" onClick={() => onViewEvidence(violation)}>
-                          <Eye className="w-4 h-4 text-gray-400" />
-                        </div>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))
+                    <TableRow key={violation.id}>
+                      <TableCell>{violation.timestamp}</TableCell>
+                      <TableCell>{violation.sop}</TableCell>
+                      <TableCell>{violation.bed}</TableCell>
+                      <TableCell className="text-gray-600">{violation.patientId || '-'}</TableCell>
+                      <TableCell className="text-gray-600">{violation.category}</TableCell>
+                      <TableCell>{getStatusBadge(violation.status)}</TableCell>
+                      <TableCell>
+                        {violation.status === 'Missed' ? (
+                          <span className="text-sm text-gray-500">No Evidence</span>
+                        ) : violation.thumbnail ? (
+                          <img
+                            src={violation.thumbnail}
+                            alt="Evidence thumbnail"
+                            className="w-16 h-12 object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => onViewEvidence(violation)}
+                          />
+                        ) : (
+                          <div className="w-16 h-12 bg-gray-100 rounded flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors" onClick={() => onViewEvidence(violation)}>
+                            <Eye className="w-4 h-4 text-gray-400" />
+                          </div>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))
               )}
             </TableBody>
           </Table>

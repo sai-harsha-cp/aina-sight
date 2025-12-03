@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { 
-  Building2, 
-  TrendingUp, 
-  TrendingDown, 
+import {
+  Building2,
+  TrendingUp,
+  TrendingDown,
   Activity,
   CheckCircle,
   AlertTriangle,
@@ -19,7 +19,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
   const centres = [
     {
       id: "kukatpally",
-      name: "NephroPlus – Kukatpally",
+      name: "Kukatpally",
       location: "Hyderabad",
       beds: 8,
       overallCompliance: 87,
@@ -36,7 +36,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
     },
     {
       id: "hitech",
-      name: "NephroPlus – Hi-Tech City",
+      name: "Hi-Tech City",
       location: "Hyderabad",
       beds: 10,
       overallCompliance: 92,
@@ -53,7 +53,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
     },
     {
       id: "ameerpet",
-      name: "NephroPlus – Ameerpet",
+      name: "Ameerpet",
       location: "Hyderabad",
       beds: 6,
       overallCompliance: 76,
@@ -70,7 +70,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
     },
     {
       id: "banjara",
-      name: "NephroPlus – Banjara Hills",
+      name: "Banjara Hills",
       location: "Hyderabad",
       beds: 12,
       overallCompliance: 65,
@@ -87,7 +87,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
     },
     {
       id: "secunderabad",
-      name: "NephroPlus – Secunderabad",
+      name: "Secunderabad",
       location: "Hyderabad",
       beds: 8,
       overallCompliance: 89,
@@ -117,7 +117,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
   };
 
   const getStatusColor = (status: string) => {
-    switch(status) {
+    switch (status) {
       case "compliant": return "text-green-700";
       case "warning": return "text-amber-700";
       case "attention": return "text-red-700";
@@ -126,7 +126,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
   };
 
   const getStatusBg = (status: string) => {
-    switch(status) {
+    switch (status) {
       case "compliant": return "bg-green-50";
       case "warning": return "bg-amber-50";
       case "attention": return "bg-red-50";
@@ -216,7 +216,7 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
       {/* Centre Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {centres.map((centre, index) => (
-          <div 
+          <div
             key={centre.id}
             className="bg-white rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all cursor-pointer group animate-in fade-in slide-in-from-bottom-4 duration-600"
             style={{ animationDelay: `${index * 80}ms` }}
@@ -239,11 +239,10 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
                   </div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0 ml-3">
-                  <div className={`px-2 py-0.5 rounded text-xs ${
-                    centre.overallCompliance >= 85 ? 'bg-green-100 text-green-800' :
-                    centre.overallCompliance >= 70 ? 'bg-amber-100 text-amber-800' :
-                    'bg-red-100 text-red-800'
-                  }`}>
+                  <div className={`px-2 py-0.5 rounded text-xs ${centre.overallCompliance >= 85 ? 'bg-green-100 text-green-800' :
+                      centre.overallCompliance >= 70 ? 'bg-amber-100 text-amber-800' :
+                        'bg-red-100 text-red-800'
+                    }`}>
                     {centre.overallCompliance}%
                   </div>
                   <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
@@ -307,16 +306,14 @@ export function ClusterDashboardView({ onDrillDown }: ClusterDashboardViewProps)
                 {/* Violations */}
                 <div className="space-y-1">
                   <div className="text-xs text-gray-600">Violations</div>
-                  <div className={`inline-flex px-2 py-0.5 rounded ${
-                    centre.violations === 0 ? 'bg-green-50' :
-                    centre.violations <= 3 ? 'bg-amber-50' :
-                    'bg-red-50'
-                  }`}>
-                    <span className={`text-sm ${
-                      centre.violations === 0 ? 'text-green-700' :
-                      centre.violations <= 3 ? 'text-amber-700' :
-                      'text-red-700'
+                  <div className={`inline-flex px-2 py-0.5 rounded ${centre.violations === 0 ? 'bg-green-50' :
+                      centre.violations <= 3 ? 'bg-amber-50' :
+                        'bg-red-50'
                     }`}>
+                    <span className={`text-sm ${centre.violations === 0 ? 'text-green-700' :
+                        centre.violations <= 3 ? 'text-amber-700' :
+                          'text-red-700'
+                      }`}>
                       {centre.violations}
                     </span>
                   </div>

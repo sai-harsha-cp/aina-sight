@@ -33,7 +33,7 @@ export function TimelineView({ dateRange, dateFrom, dateTo, selectedDate, onView
   const totalBeds = 8; // Total beds available
   const activeSessions = bedSessions.filter(session => session.compliance > 0).length;
   const bedOccupancy = Math.round((activeSessions / totalBeds) * 100);
-  
+
   // Calculate average session duration (in hours) using startTime and endTime
   const avgDuration = bedSessions.reduce((acc, session) => {
     const startTime = session.startTime.split(':');
@@ -42,7 +42,7 @@ export function TimelineView({ dateRange, dateFrom, dateTo, selectedDate, onView
     return acc + duration;
   }, 0) / bedSessions.length;
   const avgDurationHours = (avgDuration / 60).toFixed(1);
-  
+
   const patientsServed = bedSessions.length;
   const totalSessions = bedSessions.length;
 
@@ -89,32 +89,30 @@ export function TimelineView({ dateRange, dateFrom, dateTo, selectedDate, onView
       <div className="flex items-center gap-2">
         <button
           onClick={() => setActiveSubView("bed-machine")}
-          className={`px-4 py-2 rounded-lg border transition-all text-sm ${
-            activeSubView === "bed-machine"
+          className={`px-4 py-2 rounded-lg border transition-all text-sm ${activeSubView === "bed-machine"
               ? "bg-blue-600 text-white border-blue-600"
               : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-          }`}
+            }`}
         >
-          Bed and Machine Level
+          Dialysis Unit Level
         </button>
         <button
           onClick={() => setActiveSubView("storage-room")}
-          className={`px-4 py-2 rounded-lg border transition-all text-sm ${
-            activeSubView === "storage-room"
+          className={`px-4 py-2 rounded-lg border transition-all text-sm ${activeSubView === "storage-room"
               ? "bg-blue-600 text-white border-blue-600"
               : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-          }`}
+            }`}
         >
           Stock Room
         </button>
       </div>
 
-      {/* Bed and Machine Level View */}
+      {/* Dialysis Unit Level View */}
       {activeSubView === "bed-machine" && (
-        <Frame2 
+        <Frame2
           selectedDate={selectedDate}
-          onPillClick={handlePillClick} 
-          onEvidenceClick={onViewEvidence} 
+          onPillClick={handlePillClick}
+          onEvidenceClick={onViewEvidence}
         />
       )}
 
@@ -127,7 +125,7 @@ export function TimelineView({ dateRange, dateFrom, dateTo, selectedDate, onView
       {activeSubView === "dialysis-unit" && (
         <DialysisUnitTimeline selectedDate={selectedDate} />
       )}
-      
+
       <PatientJourneyModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

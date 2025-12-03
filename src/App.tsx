@@ -145,9 +145,9 @@ export default function App() {
   };
 
   const centres = [
-    { id: "kukatpally", name: "NephroPlus – Kukatpally" },
-    { id: "hitech", name: "NephroPlus – Hi-Tech City" },
-    { id: "ameerpet", name: "NephroPlus – Ameerpet" },
+    { id: "kukatpally", name: "Kukatpally" },
+    { id: "hitech", name: "Hi-Tech City" },
+    { id: "ameerpet", name: "Ameerpet" },
   ];
 
   const dateRanges = [
@@ -195,7 +195,7 @@ export default function App() {
               )}
 
               {currentView === "timeline" ? (
-                <TimelineDateFilter 
+                <TimelineDateFilter
                   selectedDate={selectedTimelineDate}
                   onDateChange={handleTimelineDateChange}
                 />
@@ -211,17 +211,16 @@ export default function App() {
                                 setSelectedDateRange(range.id);
                                 setCalendarOpen(true);
                               }}
-                              className={`px-4 py-2 rounded-lg text-sm transition-all ${
-                                selectedDateRange === range.id
+                              className={`px-4 py-2 rounded-lg text-sm transition-all ${selectedDateRange === range.id
                                   ? 'bg-[#2563EB] text-white'
                                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                              }`}
+                                }`}
                             >
-                              {dateFrom && dateTo 
+                              {dateFrom && dateTo
                                 ? `${format(dateFrom, "MMM d")} - ${format(dateTo, "MMM d")}`
                                 : dateFrom
-                                ? format(dateFrom, "MMM d, yyyy")
-                                : range.name
+                                  ? format(dateFrom, "MMM d, yyyy")
+                                  : range.name
                               }
                             </button>
                           </PopoverTrigger>
@@ -279,16 +278,15 @@ export default function App() {
                         </Popover>
                       );
                     }
-                    
+
                     return (
                       <button
                         key={range.id}
                         onClick={() => handleDateRangeChange(range.id)}
-                        className={`px-4 py-2 rounded-lg text-sm transition-all ${
-                          selectedDateRange === range.id
+                        className={`px-4 py-2 rounded-lg text-sm transition-all ${selectedDateRange === range.id
                             ? 'bg-[#2563EB] text-white'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
+                          }`}
                       >
                         {range.name}
                       </button>
@@ -315,7 +313,7 @@ export default function App() {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  
+
                   {/* View Selection */}
                   <div className="px-2 py-1.5">
                     <div className="text-xs text-gray-500 mb-1.5">Switch View</div>
@@ -337,9 +335,9 @@ export default function App() {
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </div>
-                  
+
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     className="cursor-pointer"
                     onClick={() => {
                       setEditName(userName);
@@ -364,56 +362,51 @@ export default function App() {
               <div className="flex gap-8">
                 <button
                   onClick={() => handleViewChange("dashboard")}
-                  className={`pb-3 border-b-2 transition-colors ${
-                    currentView === "dashboard"
+                  className={`pb-3 border-b-2 transition-colors ${currentView === "dashboard"
                       ? "border-[#2563EB] text-[#2563EB]"
                       : "border-transparent text-gray-600 hover:text-gray-900"
-                  }`}
+                    }`}
                 >
                   Dashboard
                 </button>
                 <button
                   onClick={() => handleViewChange("timeline")}
-                  className={`pb-3 border-b-2 transition-colors ${
-                    currentView === "timeline"
+                  className={`pb-3 border-b-2 transition-colors ${currentView === "timeline"
                       ? "border-[#2563EB] text-[#2563EB]"
                       : "border-transparent text-gray-600 hover:text-gray-900"
-                  }`}
+                    }`}
                 >
                   Timeline View
                 </button>
                 <button
                   onClick={() => handleViewChange("evidence")}
-                  className={`pb-3 border-b-2 transition-colors ${
-                    currentView === "evidence"
+                  className={`pb-3 border-b-2 transition-colors ${currentView === "evidence"
                       ? "border-[#2563EB] text-[#2563EB]"
                       : "border-transparent text-gray-600 hover:text-gray-900"
-                  }`}
+                    }`}
                 >
                   Evidence Review
                 </button>
               </div>
-              
+
               {/* Layout Toggle - Only visible on Dashboard */}
               {currentView === "dashboard" && (
                 <div className="flex items-center gap-2 bg-gray-100 rounded-lg m-[0px] p-[4px]">
                   <button
                     onClick={() => setDashboardLayout("bento")}
-                    className={`p-2 rounded transition-all ${
-                      dashboardLayout === "bento"
+                    className={`p-2 rounded transition-all ${dashboardLayout === "bento"
                         ? "bg-white text-gray-900 shadow-sm"
                         : "text-gray-600 hover:text-gray-900"
-                    }`}
+                      }`}
                   >
                     <LayoutList className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setDashboardLayout("cards")}
-                    className={`p-2 rounded transition-all ${
-                      dashboardLayout === "cards"
+                    className={`p-2 rounded transition-all ${dashboardLayout === "cards"
                         ? "bg-white text-gray-900 shadow-sm"
                         : "text-gray-600 hover:text-gray-900"
-                    }`}
+                      }`}
                   >
                     <LayoutGrid className="w-4 h-4" />
                   </button>
@@ -462,7 +455,7 @@ export default function App() {
                       </button>
                     </div>
                   )}
-                  
+
                   {/* Cluster view breadcrumb */}
                   {managerView === "cluster" && isDrilledDown && (
                     <div className="mb-6">
@@ -581,13 +574,13 @@ export default function App() {
             <Button
               onClick={() => {
                 setPasswordError("");
-                
+
                 // Validate name
                 if (!editName.trim()) {
                   setPasswordError("Name cannot be empty");
                   return;
                 }
-                
+
                 // Check if user is trying to change password
                 if (editPassword.trim() || editConfirmPassword.trim() || editCurrentPassword.trim()) {
                   // If any password field is filled, all password fields must be filled
@@ -595,31 +588,31 @@ export default function App() {
                     setPasswordError("Current password is required to change password");
                     return;
                   }
-                  
+
                   if (!editPassword.trim()) {
                     setPasswordError("New password is required");
                     return;
                   }
-                  
+
                   if (!editConfirmPassword.trim()) {
                     setPasswordError("Please confirm your new password");
                     return;
                   }
-                  
+
                   // Check if new passwords match
                   if (editPassword !== editConfirmPassword) {
                     setPasswordError("New passwords do not match");
                     return;
                   }
-                  
+
                   // In a real app, you would verify the current password here
                   // For now, we'll just update the password
                   setUserPassword(editPassword);
                 }
-                
+
                 // Update name
                 setUserName(editName.trim());
-                
+
                 // Clear fields and close
                 setEditCurrentPassword("");
                 setEditPassword("");
