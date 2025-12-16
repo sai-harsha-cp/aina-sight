@@ -3199,7 +3199,8 @@ const getUnitEventsForDate = (date: string) => {
 
 function DialysisUnitTimelineCard({ selectedDate }: { selectedDate?: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const events = getUnitEventsForDate(selectedDate || "30");
+  // For this preview card, hide actual events and show a placeholder instead
+  const events: ReturnType<typeof getUnitEventsForDate> = [];
   
   // Timeline from 5 AM to 5 PM (12 hours)
   const startHour = 5;
@@ -3323,6 +3324,15 @@ function DialysisUnitTimelineCard({ selectedDate }: { selectedDate?: string }) {
                   </Tooltip>
                 );
               })}
+              
+              {/* Placeholder text when there are no events to show */}
+              {events.length === 0 && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <span className="text-xs font-medium text-gray-400">
+                    Coming soon
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
